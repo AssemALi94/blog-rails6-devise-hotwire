@@ -1,0 +1,30 @@
+<br />
+<%= turbo_stream_from @post %>
+
+<%= turbo_frame_tag "post" do%>
+<h1> <%= @post.title %></h1>
+<small><em>
+        By <%=User.find(@post.user_id).username %> . Created at <%= @post.created_at.strftime("%I:%M %p") %></em></small>
+<hr />
+<p>
+    <%= @post.body %>
+</p>
+<div class="btn-group btn-group-sm " role="group" aria-label="crud">
+    <button type="button" class="btn btn-outline-dark"><%= link_to 'Back', posts_path,"data-turbo-frame":"_top" %></button>
+
+    <% if current_user !=nil &&  current_user.id == @post.user_id %>
+    <button type="button" class="btn btn-outline-primary"><%= link_to 'Edit', edit_post_path(@post) %></button>
+    <button type="button" class="btn btn-outline-danger"><%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+    <% end %>
+
+</div>
+<hr />
+<%end%>
+
+<h4>Comments</h4>
+<div id="comments">
+    <%= render @post.comments.order(created_at: :desc) %>
+</div>
+<hr />
+
+<%= render "comments/form" %>

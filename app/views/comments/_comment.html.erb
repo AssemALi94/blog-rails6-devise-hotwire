@@ -1,0 +1,12 @@
+<div id="<%= dom_id comment %>">
+    <div class="card">
+        <div class="card-body">
+            <strong> <%= User.find(comment.user_id).username %></strong> <br />
+            <%= comment.body %><br />
+            <small><em>at <%= comment.created_at.strftime("%I:%M %p") %><em></small>
+        </div>
+        <%= link_to 'x', [comment.post, comment],
+              method: :delete,
+              data: { confirm: "Are you sure?" },class: 'btn btn-outline-danger' %>
+    </div>
+</div>
